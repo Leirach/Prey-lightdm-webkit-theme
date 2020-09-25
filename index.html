@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--
+  ~
+  ~ Copyright © 2015-2016 Antergos
+  ~
+  ~ index.html
+  ~
+  ~ This file is part of lightdm-webkit2-greeter
+  ~
+  ~ lightdm-webkit2-greeter is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License,
+  ~ or any later version.
+  ~
+  ~ lightdm-webkit2-greeter is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ The following additional terms are in effect as per Section 7 of the license:
+  ~
+  ~ The preservation of all legal notices and author attributions in
+  ~ the material or in the Appropriate Legal Notices displayed
+  ~ by works containing it is required.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Prey Workstation</title>
+	<meta name="description" content="Theme: prey">
+	<!-- <meta name="author" content="Dustin Falgout"> -->
+
+	<!--For testing the theme in a web browser -->
+	<script type="text/javascript" src="./js/mock.js"></script>
+
+	<!-- js utilities -->
+	<!-- <script type="text/javascript" src="./js/jquery-3.5.1.slim.min.js"></script> -->
+	<script type="text/javascript" src="./js/vue.min.js"></script>
+
+	<!-- Theme's CSS -->
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+	<div id="vueport">
+		<div class="header-clock">
+			<span id="clock" class="time">
+				{{time}}
+			</span>
+		</div>
+		<div class="login-container">
+			<div class="banner username">
+				{{toUpper(selectedUser.display_name) || selectedUser.name}}
+			</div>
+			<div class="banner locked">
+				LOCKED
+			</div>
+			<form v-on:submit.prevent="onSubmit">
+				<div class="username-small">
+					<select id="user" class="username-select" v-on:change="userChanged" v-model="selectedUser">
+						<option class="username-select" v-for="item in userList" v-bind:value="item">{{item.display_name}}</option>
+					</select>
+				</div>
+
+				<div class="password-container">
+					<input v-model="password" id="pass" class="password" type="password" placeholder="Enter Password">
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Theme JavaScript -->
+	<script type="text/javascript" src="./js/main.js"></script>
+</body>
+
+</html>

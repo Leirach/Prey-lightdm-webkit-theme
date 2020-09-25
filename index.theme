@@ -1,0 +1,6 @@
+[theme]
+name=Prey
+description=Prey Theme
+engine=lightdm-webkit2-greeter
+url=index.html
+session=cinnamon
