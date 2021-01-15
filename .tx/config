@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[antergos.lightdm-greeter-theme]
+[custom.lightdm-greeter-theme]
 file_filter = i18n/<lang>.json
 source_lang = en
 source_file = i18n/en.json

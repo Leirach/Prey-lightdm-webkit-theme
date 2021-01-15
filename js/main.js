@@ -1,13 +1,14 @@
-
-function show_prompt(msg) {
+window.show_prompt = (msg) => {
     console.log(msg);
+    //vue.log(msg);
 }
 
-function show_error(err) {
+window.show_error = (err) => {
     console.error(err);
+    //vue.log(err);
 }
 
-function authentication_complete() {
+window.authentication_complete = () => {
     vue.authentication_complete()
 }
 
@@ -21,7 +22,9 @@ let vue = new Vue({
         },
         username: "",
         password: null,
-        userList: []
+        userList: [],
+        hasError: false,
+        logMessage:"",
     },
     methods: {
         updateClock() {
@@ -30,38 +33,50 @@ let vue = new Vue({
             var min = now.getMinutes();
             min = (min<10)?("0"+min):(min);
             this.time = hours+":"+min;
-            console.log(this.time)
+            //console.log(this.time)
         },
         toUpper(str) {
             return !str? null : str.toUpperCase();
         },
+        log(msg){
+            this.logMessage = msg;
+        },
         userChanged() {
-            if(lightdm._username){
+            this.hasError = false;
+            if(lightdm.username){
                 lightdm.cancel_authentication();
             }
             username = this.selectedUser.name;
             if(username !== null) {
-                lightdm.start_authentication(username);
+                lightdm.respond(username);
             }
         },
+        passwordChange() {
+            // console.log("changed");
+            this.hasError = false;
+        },
+        passwordPlaceholder() {
+            return this.hasError? "No Password Found" : "Enter Password";
+        },
         onSubmit() {
-            console.log(this.password)
             if(this.password !== null) {
-                lightdm.provide_secret(this.password);
+                console.log("responding with pswd")
+                lightdm.respond(this.password);
             }
         },
         authentication_complete() {
+            this.hasError = false;
             if (lightdm.is_authenticated) {
                 show_prompt('Logged in');
-                console.log(lightdm.authentication_user, lightdm.default_session);
                 lightdm.login(
                     lightdm.authentication_user,
                     lightdm.default_session
                 );
             }else{
                 show_error("Autentication error for user: "+this.selectedUser.name);
+                this.hasError = true
                 this.password = "";
-                lightdm.start_authentication(this.selectedUser.name);
+                lightdm.respond(this.selectedUser.name);
             }
         }
     },
@@ -69,7 +84,7 @@ let vue = new Vue({
         this.updateClock();
         setInterval(() => {
             this.updateClock();
-        }, 5000);
+        }, 10000);
 
         this.userList = lightdm.users;
         this.selectedUser = this.userList[0];

@@ -61,7 +61,7 @@
 			<div class="banner locked">
 				LOCKED
 			</div>
-			<form v-on:submit.prevent="onSubmit">
+			<form v-on:submit.prevent="">
 				<div class="username-small">
 					<select id="user" class="username-select" v-on:change="userChanged" v-model="selectedUser">
 						<option class="username-select" v-for="item in userList" v-bind:value="item">{{item.display_name}}</option>
@@ -69,9 +69,11 @@
 				</div>
 
 				<div class="password-container">
-					<input v-model="password" id="pass" class="password" type="password" placeholder="Enter Password">
+					<input v-on:keyup.enter="onSubmit" v-model="password" v-on:input="passwordChange" id="pass"
+							v-bind:class="{password: true, 'pass-error': hasError}" type="password" v-bind:placeholder="passwordPlaceholder()">
 				</div>
 			</form>
+			<div> {{logMessage}}</div>
 		</div>
 	</div>
 

@@ -1,1 +1,1 @@
-#Custom theme for lightdm
+# Custom theme for lightdm

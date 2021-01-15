@@ -122,7 +122,7 @@ a {
 
 .username-select {
 	border: none;
-	background: none;
+	background: transparent;
 	font-size: 32px;
 	color: #535969;
 }
@@ -141,6 +141,13 @@ a {
 	background-color: rgb(217, 222, 225, 1);
 	color: rgb(120, 136, 151);
 	font-family: "fontello";
+}
+
+.pass-error {
+	background: rgb(224, 63, 9) !important;
+}
+.pass-error::placeholder {
+	color: white !important;
 }
 
 ::placeholder {
